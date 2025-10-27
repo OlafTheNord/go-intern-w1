@@ -1,37 +1,36 @@
 package funcs
 
-func Sum(a []int) int {
-	res := 0
-	for _, elem := range a {
-		res += elem
-	}
-	return res
-}
+import (
+	"strconv"
+)
 
-func AvgSum(a []int) float64 {
-	res := 0
+func CalculateStats(a []int) (sum, avg, min, max float64) {
+	min = float64(a[0])
+	max = float64(a[0])
 	for _, elem := range a {
-		res += elem
-	}
-	return float64(res / len(a))
-}
-
-func Min(a []int) int {
-	res := a[0]
-	for _, elem := range a {
-		if elem < res {
-			res = elem
+		sum += float64(elem)
+		if float64(elem) > max {
+			max = float64(elem)
+		}
+		if float64(elem) < min {
+			min = float64(elem)
 		}
 	}
-	return res
+	avg = sum / float64(len(a))
+	return sum, avg, min, max
 }
 
-func Max(a []int) int {
-	res := a[0]
-	for _, elem := range a {
-		if elem > res {
-			res = elem
+func ParseArgs(args []string) ([]int, error) {
+	list := make([]int, 0, 0)
+	for _, elem := range args[1:] {
+		i, err := strconv.Atoi(elem)
+		if err != nil {
+			panic("1")
 		}
+		list = append(list, i)
 	}
-	return res
+	if len(list) == 0 {
+		panic("1")
+	}
+	return list, nil
 }
